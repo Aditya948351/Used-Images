@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon</title>
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/DRACOLoader.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="wlc.css" />
+  <!-- <style>
+    :root {
+      --primary-color: #FF6200;
+      --text-light: #FFFFFF;
+      --bg-dark: #0A0A0A;
+      --bg-light: #1A1A1A;
+      --text-muted: rgba(255, 255, 255, 0.6);
+      --glass-bg: rgba(15, 15, 15, 0.5);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --shadow-dark: rgba(0, 0, 0, 0.7);
+      --shadow-glow: rgba(255, 98, 0, 0.3);
+      --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --font-mono: 'Roboto Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      max-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      color: var(--text-light);
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    canvas#grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.4;
+      will-change: opacity;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: clamp(0.6rem, 1.5vw, 0.8rem);
+      z-index: 1;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 0.8rem;
+      padding: clamp(0.8rem, 2vw, 1rem);
+      box-shadow: 0 8px 15px var(--shadow-dark);
+      border: 1px solid var(--glass-border);
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      transition: all 0.4s var(--transition-ease);
+      animation: glowPulse 4s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-0.3rem) scale(1.02);
+      box-shadow: 0 10px 20px var(--shadow-dark);
+      background: rgba(20, 20, 20, 0.6);
+      border-color: var(--shadow-glow);
+    }
+
+    .glass-card:focus-within {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 3px;
+    }
+
+    .coming-soon {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-light);
+      text-shadow: 0 0 8px var(--shadow-glow);
+      animation: neonFade 2s ease-in-out infinite alternate, slideIn 1s ease-out;
+      position: relative;
+    }
+
+    .coming-soon::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+      border-radius: 2px;
+      animation: underlineGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes neonFade {
+      0% { text-shadow: 0 0 4px var(--shadow-glow), 0 0 8px rgba(255, 98, 0, 0.1); }
+      100% { text-shadow: 0 0 8px var(--shadow-glow), 0 0 16px rgba(255, 98, 0, 0.3); }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(15px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes underlineGlow {
+      0%, 100% { width: 60px; }
+      50% { width: 80px; }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 8px 15px var(--shadow-dark); }
+      50% { box-shadow: 0 10px 20px var(--shadow-glow); }
+    }
+
+    .subtitle {
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      animation: fadeInUp 1s ease-out 0.3s both;
+      max-width: 400px;
+      border: 1px solid var(--primary-color);
+      padding: clamp(0.6rem, 1.5vw, 0.8rem);
+      border-radius: 8px;
+      box-shadow: 0 0 8px var(--shadow-glow);
+      background-color: rgba(0, 0, 0, 0.7);
+      font-family: var(--font-mono);
+      text-align: center;
+      width: 100%;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .buttons {
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.8rem;
+      width: 100%;
+    }
+
+    .effect-btn {
+      padding: clamp(0.5rem, 1.5vw, 0.6rem) clamp(1rem, 2vw, 1.2rem);
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+      color: var(--text-light);
+      background: var(--primary-color);
+      border: none;
+      border-radius: 0.4rem;
+      cursor: pointer;
+      transition: all 0.3s var(--transition-ease);
+      position: relative;
+      overflow: hidden;
+      min-width: 100px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      z-index: 1;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 0 4px rgba(255, 98, 0, 0.3);
+      animation: buttonPulse 3s ease-in-out infinite;
+    }
+
+    .effect-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 0 12px var(--shadow-glow);
+      filter: brightness(1.2);
+    }
+
+    .effect-btn:focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+
+    .effect-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 98, 0, 0.2) 0%, transparent 70%);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s var(--transition-ease);
+    }
+
+    .effect-btn:hover::after {
+      opacity: 1;
+    }
+
+    .effect-btn.notify,
+    .effect-btn.contact {
+      background: var(--primary-color);
+    }
+
+    @keyframes buttonPulse {
+      0%, 100% { box-shadow: 0 0 4px rgba(255, 98, 0, 0.3); }
+      50% { box-shadow: 0 0 8px rgba(255, 98, 0, 0.5); }
+    }
+
+    .email-capture {
+      margin-top: 0.5rem;
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      padding: 10px;
+      gap: 0.4rem;
+    }
+
+    .email-capture h3 {
+      font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+      color: var(--primary-color);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .email-input {
+      padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.6rem, 1.5vw, 0.8rem);
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+      width: 100%;
+      max-width: 250px;
+      border: 1px solid var(--glass-border);
+      border-radius: 0.4rem;
+      background: var(--glass-bg);
+      color: var(--text-light);
+      transition: all 0.3s var(--transition-ease);
+      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .email-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 8px var(--shadow-glow), inset 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .email-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .email-submit {
+      padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.6rem, 1.5vw, 0.8rem);
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+      border: none;
+      border-radius: 999px;
+      background: var(--primary-color);
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.3s var(--transition-ease);
+      text-transform: uppercase;
+      font-weight: 600;
+      box-shadow: 0 0 4px rgba(255, 98, 0, 0.3);
+      animation: buttonPulse 3s ease-in-out infinite;
+      width: 100%;
+      max-width: 250px;
+    }
+
+    .email-submit:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 0 12px var(--shadow-glow);
+      filter: brightness(1.2);
+    }
+
+    .services-heading {
+      text-align: center;
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      margin: 0.5rem 0;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      position: relative;
+      animation: fadeInDown 1s ease;
+      text-shadow: 0 0 4px var(--shadow-glow);
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .services-heading::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+      border-radius: 2px;
+      animation: underlineGlow 2s ease-in-out infinite;
+    }
+
+    .services {
+      width: 100%;
+      max-width: 900px;
+      margin: 0.5rem auto;
+      z-index: 1;
+      position: relative;
+      padding: 0;
+    }
+
+    .swiper-container {
+      width: 100%;
+      height: auto;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .swiper-wrapper {
+      display: flex;
+      justify-content: unset;
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      opacity: 0.9;
+      transition: opacity 0.3s var(--transition-ease);
+      width: auto;
+    }
+
+    .swiper-slide-active {
+      opacity: 1;
+    }
+
+    .service-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.6rem;
+      padding: clamp(0.6rem, 1.5vw, 0.8rem);
+      text-align: center;
+      transition: all 0.4s var(--transition-ease);
+      box-shadow: 0 4px 12px var(--shadow-dark);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 150px;
+      width: 100%;
+      max-width: 140px;
+      justify-content: center;
+      animation: cardFloat 4s ease-in-out infinite;
+      margin-top: 20px;
+    }
+
+    .service-card:hover {
+      transform: translateY(-0.3rem) scale(1.05);
+      background: rgba(20, 20, 20, 0.7);
+      box-shadow: 0 8px 20px var(--shadow-dark);
+      border-color: var(--shadow-glow);
+    }
+
+    .service-card:focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--shadow-glow) 0%, transparent 70%);
+      transform: rotate(45deg);
+      opacity: 0;
+      transition: opacity 0.4s var(--transition-ease);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .service-icon-canvas {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 0.4rem;
+      transition: transform 0.3s var(--transition-ease);
+    }
+
+    .service-card:hover .service-icon-canvas {
+      transform: scale(1.2);
+    }
+
+    .service-title {
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+      color: var(--text-light);
+      margin: 0.3rem 0;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-shadow: 0 0 2px rgba(255, 98, 0, 0.3);
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: var(--primary-color);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s var(--transition-ease);
+      box-shadow: 0 0 4px var(--shadow-dark);
+    }
+
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+      background: rgba(20, 20, 20, 0.7);
+      box-shadow: 0 0 8px var(--shadow-glow);
+      transform: scale(1.1);
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size: 14px;
+    }
+
+    .swiper-pagination {
+      position: relative;
+      margin-top: 0.3rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .swiper-pagination-bullet {
+      background: var(--text-muted);
+      opacity: 0.5;
+      transition: all 0.3s var(--transition-ease);
+    }
+
+    .swiper-pagination-bullet-active {
+      background: var(--primary-color);
+      opacity: 1;
+      transform: scale(1.2);
+      box-shadow: 0 0 2px var(--shadow-glow);
+    }
+
+    @media (max-width: 1024px) {
+      .service-card {
+        height: 90px;
+        max-width: 120px;
+        padding: clamp(0.5rem, 1.2vw, 0.6rem);
+      }
+
+      .service-title {
+        font-size: clamp(0.6rem, 1.2vw, 0.7rem);
+      }
+
+      .service-icon-canvas {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .glass-card {
+        padding: clamp(0.6rem, 1.5vw, 0.8rem);
+        max-width: 400px;
+      }
+
+      .coming-soon {
+        font-size: clamp(1.2rem, 4vw, 1.8rem);
+      }
+
+      .subtitle {
+        font-size: clamp(0.7rem, 1.6vw, 0.9rem);
+        padding: clamp(0.5rem, 1.2vw, 0.6rem);
+        max-width: 300px;
+      }
+
+      .effect-btn {
+        min-width: 90px;
+        padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.8rem, 1.8vw, 1rem);
+        font-size: clamp(0.6rem, 1.2vw, 0.7rem);
+      }
+
+      .email-capture h3 {
+        font-size: clamp(0.8rem, 1.6vw, 1rem);
+      }
+
+      .email-input,
+      .email-submit {
+        font-size: clamp(0.6rem, 1.2vw, 0.7rem);
+        padding: clamp(0.3rem, 0.8vw, 0.4rem) clamp(0.5rem, 1.2vw, 0.6rem);
+      }
+
+      .email-input {
+        width: 100%;
+        max-width: 200px;
+        border-radius: 0.4rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .email-submit {
+        border-radius: 0.4rem;
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .services-heading {
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
+      }
+
+      .service-card {
+        height: 80px;
+        max-width: 100px;
+        padding: clamp(0.4rem, 1vw, 0.5rem);
+      }
+
+      .service-title {
+        font-size: clamp(0.55rem, 1.1vw, 0.6rem);
+      }
+
+      .service-icon-canvas {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .glass-card {
+        padding: clamp(0.5rem, 1.2vw, 0.6rem);
+        max-width: 300px;
+      }
+
+      .coming-soon {
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
+      }
+
+      .effect-btn {
+        min-width: 80px;
+        padding: clamp(0.3rem, 0.8vw, 0.4rem) clamp(0.6rem, 1.5vw, 0.8rem);
+        font-size: clamp(0.55rem, 1.1vw, 0.6rem);
+      }
+
+      .service medlemmar {
+        height: 70px;
+        max-width: 90px;
+        padding: clamp(0.3rem, 0.8vw, 0.4rem);
+      }
+
+      .service-title {
+        font-size: clamp(0.5rem, 1vw, 0.55rem);
+      }
+
+      .service-icon-canvas {
+        width: 30px;
+        height: 30px;
+      }
+
+      .swiper-button-next,
+      .swiper-button-prev {
+        width: 18px;
+        height: 18px;
+      }
+
+      .swiper-button-next::after,
+      .swiper-button-prev::after {
+        font-size: 10px;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .email-capture {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+      }
+
+      .email-input {
+        border-radius: 0.4rem 0 0 0.4rem;
+        margin-bottom: 0;
+      }
+
+      .email-submit {
+        border-radius: 0 0.4rem 0.4rem 0;
+        width: auto;
+        max-width: none;
+      }
+    }
+
+    .ripple {
+      position: absolute;
+      background: rgba(255, 98, 0, 0.4);
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      transform: scale(0);
+      animation: ripple 0.5s linear;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(30);
+        opacity: 0;
+      }
+    }
+  </style> -->
+</head>
+<body>
+  <canvas id="grid"></canvas>
+  <div class="container">
+    <div class="glass-card" style="margin: 20px;">
+      <h1 class="coming-soon">Coming Soon</h1>
+      <p class="subtitle" id="scrambleText">We're working hard to bring you an amazing experience. Stay tuned!</p>
+      <div class="buttons">
+        <a href="#" class="effect-btn notify">Notify Me</a>
+        <a href="#" class="effect-btn contact">Contact Us</a>
+      </div>
+      <div class="email-capture">
+        <h3>Stay Updated</h3>
+        <input type="email" class="email-input" placeholder="Enter your email" aria-label="Email address">
+        <button class="email-submit">Subscribe</button>
+      </div>
+    </div>
+
+    <h2 class="services-heading">Our Services</h2>
+    <section class="services" role="region" aria-label="Our Services">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="Website Development and Management Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/website_dev/0 (3).glb" data-model-config="website"></canvas>
+              <h3 class="service-title">Website Development & Management</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="Content Strategy Service">
+              <canvas class="service-icon-canvas" data-glb="new_models\Content Strategy\0 (6).glb" data-model-config="content"></canvas>
+              <h3 class="service-title">Content <br>--<br>Strategy</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="B2B Marketing Materials Service">
+              <canvas class="service-icon-canvas" data-glb="new_models\B2B Marketing Materials\1 (7).glb" data-model-config="b2b"></canvas>
+              <h3 class="service-title">B2B <br> Marketing Materials</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="Social Media Management Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/Social Media management/1 (15).glb" data-model-config="social"></canvas>
+              <h3 class="service-title">Social <br> Media Management</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="Online Advertising and Promotion Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/Online Advertising & Promotion/0 (16).glb" data-model-config="advertising"></canvas>
+              <h3 class="service-title">Online Advertising & Promotion</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="SEO and SEM Strategy Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/SEO and SEM Strategy/0 (15).glb" data-model-config="seo"></canvas>
+              <h3 class="service-title">SEO <br>& <br>SEM Strategy</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="Email Marketing Campaigns Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/Email Marketing Campaigns/0 (18).glb" data-model-config="email"></canvas>
+              <h3 class="service-title">Email<br> Marketing Campaigns</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="CRM and Lead Management Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/CRM_Lead/1 (16).glb" data-model-config="crm"></canvas>
+              <h3 class="service-title">CRM<br> & Lead<br> Management</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="Collaborations and Partnerships Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/Collaborations and Partnerships/1 (20).glb" data-model-config="collaborations"></canvas>
+              <h3 class="service-title">Collaborations &<br> Partnerships</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="Online Reputation and Management Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/Online Reputation and Management/0 (13).glb" data-model-config="reputation"></canvas>
+              <h3 class="service-title">Online Reputation <br>& Management</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="Analytics and Reporting Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/analytics_reporting/analytic1.glb" data-model-config="analytics"></canvas>
+              <h3 class="service-title">Analytics <br>&<br> Reporting</h3>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="service-card" tabindex="0" role="article" aria-label="E-commerce Management Service">
+              <canvas class="service-icon-canvas" data-glb="new_models/E-commerce/0 (34).glb" data-model-config="ecommerce"></canvas>
+              <h3 class="service-title">E-commerce<br>--<br> Management</h3>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+  </div>
+  <script src="wlc.js"></script>
+   
+</body>
+</html>
